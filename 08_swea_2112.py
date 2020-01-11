@@ -23,7 +23,6 @@ for tc in range(T):
                 return False
         return True
 
-
     def dfs(x, cnt):
         global answer
         if answer <= cnt: return
@@ -38,14 +37,13 @@ for tc in range(T):
                     t.append(drug[1])
             if check(t):
                 answer = min(answer, cnt)
-        if x >= d: return
+            return
         p[x] = -1
         dfs(x+1, cnt)
         p[x] = 0
         dfs(x+1, cnt+1)
         p[x] = 1
         dfs(x+1, cnt+1)
-
 
     p = [0] * d
     drug = [[0] * w, [1] * w]
