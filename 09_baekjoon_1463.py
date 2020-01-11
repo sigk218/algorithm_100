@@ -1,23 +1,16 @@
 import sys
-sys.stdin = open('input.txt','r')
+sys.stdin = open('input.txt', 'r')
 
-number = int(input())
+# 최대 최소 조건
+n = int(input())
+cnt = [0 for _ in range(n+1)]
 
-def solve(n, iter):
-    global answer
-    if iter > answer:
-        return
-    if n == 1:
-        # print(n, iter)
-        answer = min(iter, answer)
-        return 
-    else:    
-        solve(n - 1, iter+1)
-        if n % 3 == 0:
-            solve(n // 3, iter+1)
-        if n % 2 == 0:
-            solve(n // 2, iter+1)
+for i in range(2, n+1):
+    cnt[i] = cnt[i-1] + 1
+    if i % 2 == 0:
+        cnt[i] = min(cnt[i], cnt[i // 2] + 1)
+    if i % 3 == 0:
+        cnt[i] = min(cnt[i], cnt[i // 3] + 1)
 
-answer = 10 ** 6 + 1
-solve(number, 0)
-print(answer)
+print(cnt[n])
+
