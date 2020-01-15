@@ -1,47 +1,46 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
+def solve():
+    global answer
 
-def default():
-    global cnt
-    for mm in range(m):
-        if flag[0][mm] != 'W':
-            cnt += 1
-        if flag[n-1][mm] != 'R':
-            cnt += 1
-    return cnt
+    for start in range(1, n-1):
+        for end in range(start, n-1):
+            temp = 0
+            # W
+            for i in range(1, start):
+                temp += color_cnt[i][0]
+                temp += color_cnt[i][1]
 
-def solve(d, color, cnt):
-    global temp
-    # print(temp)
-    # print(d, color, cnt)
-    if d == n - 2:
-        print('end', cnt)
-        print(temp)
-    else:
-        for mm in range(m):
-            if flag[d][mm] != color:
-                cnt += 1
-        temp.append('B')
-        solve(d + 1, 'B', cnt)
-        temp.pop()
-        if color == 'W':
-            if d < n - 2:
-                temp.append('w')
-                solve(d+1, 'W', cnt)
-                temp.pop()
-        elif color == 'B':
-            temp.append('R')
-            solve(d+1, 'R', cnt)
-            temp.pop()
+            # B
+            for i in range(start, end+1):
+                temp += color_cnt[i][0]
+                temp += color_cnt[i][2]
+
+            # R
+            for i in range(end+1, n-1):
+                temp += color_cnt[i][1]
+                temp += color_cnt[i][2]
+
+            answer = min(temp, answer)
 
 
 T = int(input())
+for tc in range(T):
+    n, m = map(int, input().split())
+    flag = [input() for _ in range(n)]
+    answer = 2501
+    # r, b, w
+    color_cnt = [[0] * 3 for _ in range(n)]
 
-n, m = map(int, input().split())
-flag = [list(input()) for _ in range(n)]
-check = ['W'] + ['' for _ in range(n-2)] + ['R']
-temp = []
-solve(0, 'W', 0)
-cnt = 0
-print(default())
+    for nn in range(n):
+        color_cnt[nn][0] = flag[nn].count('R')
+        color_cnt[nn][1] = flag[nn].count('B')
+        color_cnt[nn][2] = flag[nn].count('W')
+
+    solve()
+    print('#{} {}'.format(tc+1, answer+color_cnt[0][0]+color_cnt[0][1]+color_cnt[n-1][1]+color_cnt[n-1][2]))
+
+
+
+
