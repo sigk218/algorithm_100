@@ -50,6 +50,7 @@ for tc in range(T):
 
         for r, c in temp:
             board[r][c] = color
+        print(board)
 
     wcnt, bcnt = 0, 0
     for i in range(n):
