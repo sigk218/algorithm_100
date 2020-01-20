@@ -50,7 +50,7 @@ for tc in range(T):
 
         for r, c in temp:
             board[r][c] = color
-            pritn(board)
+            # pritn(board)
 
     wcnt, bcnt = 0, 0
     for i in range(n):
@@ -61,44 +61,3 @@ for tc in range(T):
                 wcnt += 1
     print('#{} {} {}'.format(tc+1, bcnt, wcnt))
 
-# x, y = 3, 0
-# board = [[2, 2, 2, 2], [1, 1, 1, 2], [0, 1, 2, 2], [2, 2, 2, 2]]
-
-# delta = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, -1), (-1, 1), (1, 1), (-1, -1)]
-# def inside(x, y):
-#     return 0 <= x < N and 0 <= y < N
-# TC = int(input())
-# for tc in range(1, TC + 1):
-#     N, M = map(int, input().split())
-#     # 흑돌 1, 백돌 2
-#     board = [[0] * N for _ in range(N)]
-#     # print(*board, sep="\n")
-#     n = N // 2
-#     board[n - 1][n - 1] = board[n][n] = 2
-#     board[n][n - 1] = board[n - 1][n] = 1
-#     # print(*board, sep="\n")
-#     for m in range(M):
-#         # print(m, "번째")
-#         Y, X, color = map(int, input().split())
-#         x = X - 1
-#         y = Y - 1
-#         board[x][y] = color
-#         for d in range(8):
-#             dx = delta[d][0]
-#             dy = delta[d][1]
-#             # for n in range(N-1, 1, -1): # 뒤에서부터 해봄
-#             for n in range(2, N):
-#                 big_flag = False
-#                 if inside(x + n * dx, y + n * dy) and board[x + n * dx][y + n * dy] == color:
-#                     flag = True
-#                     for bet in range(1, n):
-#                         if board[x + bet * dx][y + bet * dy] != 3 - color:
-#                             flag = False
-#                     if flag == True:
-#                         big_flag = True
-#                         for bet in range(1, n):
-#                             board[x + bet * dx][y + bet * dy] = color
-#                 if big_flag == True:
-#                     break
-#     temp = sum(board, [])
-#     print('#%d %d %d' % (tc, temp.count(1), temp.count(2)))

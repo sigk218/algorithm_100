@@ -1,5 +1,6 @@
-import collections
+r = '1'
+st = 'st'
+print(r.isdecimal())
 
-
-d = collections.deque([1, 2, 4, 3, 5])
-print(d)
+dap = 49
+print(dap**0.5)
