@@ -59,7 +59,7 @@ for turn, direction in commands:
         change_list.append((i+1, temp_d2))
     for idx, d in change_list:
         wheel[idx] = rotate(wheel[idx], d)
-    # print(change_list)
+    print(change_list)
     # print(*wheel, sep='\n')
 score = 0
 for i in range(4):
