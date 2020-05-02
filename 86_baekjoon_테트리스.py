@@ -1,6 +1,7 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
+# i번 열부터 s 모양을 놓을 수 있는지 확인
 def calc(i, s):
     if i+len(s) > n:
         return 0
@@ -13,8 +14,10 @@ def calc(i, s):
 
 n, m = map(int,input().split())
 a = list(map(int,input().split()))
+print(a)
 ans = 0
 
+# s = 블럭의 가장 아랫 면이 가장 아래를 기준으로 얼마나 떨어져있는지 확인
 for i in range(n):
     if m == 1:
         ans += calc(i, "0") + calc(i, "0000")

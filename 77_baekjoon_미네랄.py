@@ -7,6 +7,7 @@ def wall(x, y):
 
 def findC(x, y):
 
+    # if visited[x][y] : return
     bottom = [-1 for _ in range(c)]
     clu = []
     q = [(x, y)]
@@ -25,11 +26,7 @@ def findC(x, y):
                 q.append((nx, ny))
                 visited[nx][ny] = 1
                 arr[nx][ny] = '.'
-                # 아래로 떨어 질 수 있다면
-                # print(nx, ny)
-                # if wall(nx+1, ny) or (not wall(nx + 1, ny) and arr[nx+1][ny] == '.' and not visited[nx+1][ny]):
-                #     bottom[ny] = max(bottom[ny], nx)
-                #     print(bottom, ny, nx)
+
     now = -1
     # print(bottom, clu)
     for i in range(c):
@@ -77,10 +74,15 @@ for i in range(n):
                 # print(d[i], j)
                 break
 
+    visited = [[0 for _ in range(c)] for __ in range(r)]
     for dx, dy in (0, 1), (1, 0), (0, -1), (-1, 0):
        if not wall(d[i]+dx, j+dy) and arr[d[i]+dx][j+dy] == 'x':
-           visited = [[0 for _ in range(c)] for __ in range(r)]
-           findC(d[i]+dx, j+dy)
+           # 떨어 졌는 지 안 떨어졌는지 확인을 해주는 거!
+           # 중복이 되면 x, y만 떨어지는 일이 발생함 !
+           if visited[d[i]+dx][j+dy]:
+               continue
+           else:
+               findC(d[i]+dx, j+dy)
 
 for i in range(r):
     for j in range(c):
