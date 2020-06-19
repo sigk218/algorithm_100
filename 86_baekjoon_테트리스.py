@@ -1,36 +1,63 @@
 import sys
 sys.stdin = open('input.txt', 'r')
 
-# i번 열부터 s 모양을 놓을 수 있는지 확인
-def calc(i, s):
-    if i+len(s) > n:
-        return 0
-    base = a[i] - (ord(s[0])-ord('0'))
-    print(a[i], ord(s[0]), ord('0'), base)
-    for j in range(len(s)):
-        if base != a[i+j] - (ord(s[j])-ord('0')):
-            return 0
-    return 1
+n, p = map(int, input().split())
 
-n, m = map(int,input().split())
-a = list(map(int,input().split()))
-print(a)
-ans = 0
+arr = list(map(int, input().split()))
 
-# s = 블럭의 가장 아랫 면이 가장 아래를 기준으로 얼마나 떨어져있는지 확인
+answer = 0
 for i in range(n):
-    if m == 1:
-        ans += calc(i, "0") + calc(i, "0000")
-    elif m == 2:
-        ans += calc(i, "00")
-    elif m == 3:
-        ans += calc(i, "001") + calc(i, "10")
-    elif m == 4:
-        ans += calc(i, "100") + calc(i, "01")
-    elif m == 5:
-        ans += calc(i, "000") + calc(i, "01") + calc(i, "101") + calc(i, "10")
-    elif m == 6:
-        ans += calc(i, "000") + calc(i, "00") + calc(i, "011") + calc(i, "20")
-    elif m == 7:
-        ans += calc(i, "000") + calc(i, "00") + calc(i, "110") + calc(i, "02")
-print(ans)
+    if p == 1:
+        answer += 1
+        if i+3 < n and arr[i] == arr[i+1] and arr[i+1] == arr[i+2] and arr[i+2] == arr[i+3]:
+            answer += 1
+    elif p == 2:
+        if i+1 < n and arr[i] == arr[i+1]:
+            answer += 1
+    elif p == 3:
+        if i + 2 < n and arr[i] == arr[i+1] and arr[i+1] +1== arr[i+2]:
+            answer += 1
+        if i + 1 < n and arr[i] == arr[i+1] +1:
+            answer += 1
+    elif p == 4:
+        if i + 2 < n and arr[i] == arr[i+1]+1 and arr[i+1] == arr[i+2]:
+            answer += 1
+        if i + 1 < n and arr[i]+1 == arr[i+1]:
+            answer += 1
+    elif p == 5:
+        if i + 2 < n:
+            if arr[i] == arr[i+1] and arr[i+1] == arr[i+2]:
+                answer +=1
+            if arr[i] == arr[i+1] + 1 and arr[i+1] + 1 == arr[i+2]:
+                answer += 1
+        if i+1 < n:
+            if arr[i] +1 == arr[i+1]:
+                answer += 1
+            if arr[i] == arr[i+1] + 1:
+                answer += 1
+    elif p == 6:
+        if i+2 <n:
+            if arr[i] == arr[i+1] and arr[i+1] == arr[i+2]:
+                answer +=1
+            if arr[i] +1 == arr[i+1] and arr[i+1] == arr[i+2]:
+                answer += 1
+        if i+1 <n:
+            if arr[i] == arr[i+1]:
+                answer += 1
+            if arr[i] == arr[i+1] + 2:
+                answer += 1
+    elif p == 7:
+        if i+2 <n:
+            if arr[i] == arr[i+1] and arr[i+1] == arr[i+2]:
+                answer += 1
+            if arr[i+2] + 1 == arr[i+1] and arr[i] == arr[i+1]:
+                answer += 1
+        if i+1 <n:
+            if arr[i] + 2 == arr[i+1]:
+                answer += 1
+            if arr[i] == arr[i+1]:
+                answer += 1
+
+
+
+print(answer)
