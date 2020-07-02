@@ -29,7 +29,6 @@ def rotate(direction, board):
 
     # 오른 쪽
     elif direction == 1:
-
         for i in range(n):
             t = []
             for j in range(n - 1, -1, -1):

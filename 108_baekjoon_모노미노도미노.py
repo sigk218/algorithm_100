@@ -172,7 +172,7 @@ for ni in range(n):
             if board[j][i]:
                 bcnt += 1
                 break
-    # 녹색 옮기기
+    # 녹색 옮기
 
     # 파란색 옮기기
     print(gcnt, bcnt)
