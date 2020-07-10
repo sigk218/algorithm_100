@@ -1,32 +1,23 @@
-def pick(d, cnt, num_lost, lost, n):
-    global answer, check
-    # print(d, cnt, num_lost)
-    if d == num_lost:
-        answer = max(answer, cnt)
-        return
-    else:
-        for di in [1, -1]:
-            idx = lost[d] - 1
-            if idx+di < n and check[idx+di] and idx+di not in lost:
-                check[idx+di] = 0
-                pick(d+1, cnt+1, num_lost, lost, n)
-                check[idx+di] = 1
-            else:
-                pick(d + 1, cnt, num_lost, lost, n)
-
 def solution(n, lost, reserve):
-    global check, answer
 
-    # 체육 수업을 들을 수 있는 학생의 최대값
-    num_lost = len(lost)
-    check = [0 for _  in range(n)]
+    # 여벌의 체육복이 있는 학생도 도난 당했을 수 있다.
+    # 모든 학생이 1벌의 체육복을 가지고 있다.
+    status = [1 for _ in range(n)]
+    # 잃어버린 학생은 -1
+    for stu in lost:
+        status[stu-1] -= 1
+    # 여벌이 있는 학생은 +1
     for stu in reserve:
-        check[stu-1] = 1
-    answer = n - num_lost
-    pick(0, n-num_lost, num_lost, lost, n)
-    return answer
+        status[stu-1] += 1
+    for i in range(n):
+        if not status[i]:
+            if i-1 >= 0 and status[i-1] > 1:
+                status[i-1] -= 1
+                status[i] += 1
+            elif i+1 < n and status[i+1] > 1:
+                status[i+1] -= 1
+                status[i] += 1
 
-n = 3
-lost = [3]
-reserve = [1]
-print(solution(5, [2,3], [3,4]))
+    # 이렇게 쓰는 것도 가능함 : len([x for x in n if x != 0])
+    return sum(map(bool, status))
+print(solution(5, [2,4], [1, 3, 5]))
