@@ -15,7 +15,8 @@ for i in range(r):
 
 def spread():
     # 이번에 퍼지게 될 먼지 리스트
-    dust = []
+    dust = [[0 for _  in range(c)] for _ in range(r)]
+
     for i in range(r):
         for j in range(c):
             if arr[i][j] > 0:
@@ -32,12 +33,13 @@ def spread():
                     if arr[xx][yy] == -1:
                         continue
                     cnt += 1
-                    dust.append((xx, yy, arr[i][j] // 5))
+                    dust[xx][yy] += arr[i][j] // 5
+                    # dust.append((xx, yy, arr[i][j] // 5))
                 arr[i][j] -= (arr[i][j] // 5) * cnt
 
-    for x, y, d in dust:
-        # print(x, y, d)
-        arr[x][y] += d
+    for i in range(r):
+        for j in range(c):
+            arr[i][j] += dust[i][j]
 
 
 def work():
@@ -56,9 +58,7 @@ def work():
                 break
             if arr[x][y] == -1:
                 break
-            next = arr[x][y]
-            arr[x][y] = temp
-            temp = next
+            arr[x][y], temp = temp, arr[x][y]
 
 
     # 공기 청정기 아래 쪽은 시계 방향
@@ -76,9 +76,7 @@ def work():
                 break
             if arr[x][y] == -1:
                 break
-            next = arr[x][y]
-            arr[x][y] = temp
-            temp = next
+            arr[x][y], temp = temp, arr[x][y]
 
 for _ in range(t):
     spread()
