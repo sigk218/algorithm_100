@@ -20,11 +20,9 @@ route = [
 # 중복 순열 세우기
 def pick(d, x, score):
     global answer, t
-    # print(d, x, score, visited)
+
     if d == 10:
         answer = max(answer, score)
-
-        # print('다 뽑았다', score, t)
     else:
         # 뽑을 수 있는 말이면 뽑는다
         for i in range(4):
@@ -34,37 +32,31 @@ def pick(d, x, score):
             next_location = location[i] + arr[d]
 
             # 값 저장
-            temp_l = location[i]
             temp_w = way[i]
             temp_vi = visited[i]
 
             # 끝까지 갔다면(마지막 인덱스에 도착하면), 뽑고 넘어간다
             if next_location >= len(route[way[i]]):
                 visited[i] = 32
-                t.append((i, score))
                 pick(d + 1, i, score)
-                t.pop()
                 # 값 복원
                 way[i] = temp_w
                 visited[i] = temp_vi
                 continue
 
-            # print(next_location)
             if way[i] == 0 and next_location < 20 and next_location % 5 == 0:
                 way[i] = (next_location // 5)
 
             # 그 자리에 값이 있다면, 뽑지말고 넘어간다
             if route[way[i]][next_location] in visited:
                 way[i] = temp_w
-                # visited[i] = temp_vi
                 continue
 
             location[i] += arr[d]
             visited[i] = route[way[i]][location[i]]
-            t.append((i, score, scores[route[way[i]][location[i]]], score+scores[route[way[i]][location[i]]]))
             pick(d + 1, i, score+scores[route[way[i]][location[i]]])
+
             # 값 복원
-            t.pop()
             visited[i] = temp_vi
             location[i] -= arr[d]
             way[i] = temp_w
@@ -79,7 +71,6 @@ visited = [0, 0, 0, 0]
 way = [0, 0, 0, 0]
 arr = list(map(int, input().split()))
 answer = 0
-t = []
 pick(0, 0, 0)
 print(answer)
 
